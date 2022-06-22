@@ -9,12 +9,18 @@
 </head>
 <body>
     <div class="container text-center mt-4">
+        <input id="url" type="text" class="form-control mb-4" placeholder="Url" value="https://ajarek-database-default-rtdb.europe-west1.firebasedatabase.app/.json" >
+        <textarea class="form-control mb-4" placeholder="Data.json" id="textarea" rows="5">{
+            "name":"Ala",
+            "surname":"Asowska",
+            "age":"24"
+            }</textarea>
         <button id="get" class="btn btn-success" >GET</button>
         <button id="post" class="btn btn-primary" >POST</button>
         <button id="put" class="btn btn-warning" >PUT</button>
         <button id="patch" class="btn btn-info" >PATCH</button>
         <button id="delete" class="btn btn-danger" >DELETE</button>
-        <div class="result fs-3 mt-4"></div>
+        <textarea class="form-control mt-4" placeholder="Data.json" id="textarea-output" rows="10" readonly></textarea>
 
     </div>
    

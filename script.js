@@ -1,58 +1,48 @@
-const result=document.querySelector('.result')
+const result=document.querySelector('#textarea-output')
+const textarea=document.querySelector('#textarea')
 import { EasyHTTP } from "./EasyHTTP-class.js";
-
-const url='https://ajarek-database-default-rtdb.europe-west1.firebasedatabase.app/.json';
-const urlPut='https://ajarek-database-default-rtdb.europe-west1.firebasedatabase.app/-N57OuJ58sgd1lDY0vb9/.json';
-const urlPatch='https://ajarek-database-default-rtdb.europe-west1.firebasedatabase.app/-N57OuJ58sgd1lDY0vb9/.json';
-
-const urlDelete=`https://ajarek-database-default-rtdb.europe-west1.firebasedatabase.app/-N57Kb1MZMfozbuJK6UP/.json`;
-const data={ "name": "Ajarek",
-    "surname": "Jarecki",
-    "age": "62"}
-const dataPatch={
-    "name": "Ajózek",
-}
-
-
+// const url='https://ajarek-database-default-rtdb.europe-west1.firebasedatabase.app/.json';
 const http = new EasyHTTP();
 
 const getData=()=>{
+    const url=document.querySelector('#url').value
     http.get(url)
-    .then(data => renderGet(data))
-    
+    .then(data => renderGet(data))    
 }
 
 const postData=()=>{
+    const url=document.querySelector('#url').value
+    const json =textarea.value
+    const data=JSON.parse(json)
     http.post(url,data)
-    .then(data => {
-        result.innerHTML=''
-        result.innerHTML=`<li>id=${data.name}=> data posted </li>`
-    })
+    .then(data => renderGet(data))
 }
+
 const putData=()=>{
-    http.put(urlPut,data,)
-    .then(data => {
-        result.innerHTML=''
-        result.innerHTML=`<li>name=${data.name} surname=${data.surname} age=${data.age} => data put </li>`
-    })
-    
+    const url=document.querySelector('#url').value
+    const json =textarea.value
+    const data=JSON.parse(json)
+    http.put(url,data,)
+    .then(data => renderGet(data))  
 }
 
 const patchData=()=>{
-    http.patch(urlPatch,dataPatch)
-    .then(data => {
-        result.innerHTML=''
-        result.innerHTML=`<li>name=${data.name}  => data patched </li>`
-    })
+    const url=document.querySelector('#url').value
+    const json =textarea.value
+    const data=JSON.parse(json)
+    http.patch(url,data)
+    .then(data => renderGet(data))
 }
 
 const deleteData=()=>{
-    http.delete(urlDelete)
-    .then(data => {
-        if(!data){
-        result.innerHTML=`<li>data=${data}=> data deleted </li>`
-        }
-    })
+    const url=document.querySelector('#url').value
+    http.delete(url)
+    .then(data => renderGet(data))
+}
+
+const renderGet=(data)=>{
+    result.innerHTML=''
+   result.innerHTML=JSON.stringify(data,undefined, 4)
 }
 
 document.querySelector('#get').addEventListener('click',getData);
@@ -61,13 +51,4 @@ document.querySelector('#put').addEventListener('click',putData);
 document.querySelector('#patch').addEventListener('click',patchData);
 document.querySelector('#delete').addEventListener('click',deleteData);
 
-const renderGet=(data)=>{
-    result.innerHTML=''
-    for(let key in data){
-        result.innerHTML+=`<li>
-         id: ${key}
-         name: ${data[key].name}
-         surname: ${data[key].surname}
-         age: ${data[key].age}</li>`
-    }
-}
+
